@@ -609,8 +609,8 @@ class PluploadHandler
     private function lockTheFile($file_name)
     {
         $file_path = $this->getTargetPathFor($file_name);
-        $this->out = fopen("$file_path.lock", 'w');
-        flock($this->out, LOCK_EX); // obtain blocking lock
+        $this->out = @fopen("{$file_path}.lock", 'w');
+        @flock($this->out, LOCK_EX); // obtain blocking lock
     }
 
 
@@ -622,7 +622,7 @@ class PluploadHandler
     private function unlockTheFile($file_name)
     {
         $file_path = $this->getTargetPathFor($file_name);
-        fclose($this->out);
+        @fclose($this->out);
         @unlink("$file_path.lock");
     }
 
